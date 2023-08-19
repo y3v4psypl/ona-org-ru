@@ -11,17 +11,30 @@ export default function PostList() {
     const [state, setState] = useState('loading');
     const [postListItems, setPostListItems] = useState<JSX.Element[]>([<></>])
 
-    const checkAndModifyDescription = (description: string, title: string, link: string): string => {
+    const checkAndModifyPostText = (description: string, title: string, link: string): string => {
         const checkLength = (string: string) => string.length <= 280
 
-        const descriptionPremodified = (description: string) => description.slice(description.lastIndexOf('</div>') + 6, description.length - 1)
-            .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
-            .replaceAll('<p>','')
-            .replaceAll('</p>', '<br/>')
+        let postText = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \n`
+            + description.replaceAll(/<div[^>]*>(.+)<\/div>/gmi, '')
+                .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
+                .replaceAll('<p>','')
+                .replaceAll('</p>', '\n')
+                .replaceAll('<!-- more -->', '')
+                .replaceAll(/<a[^>]+>/gmi, '')
+                .replaceAll('</a>', '')
+            + `\n ${link}`
 
-        if (checkLength(`🚺 ${title} 🚺` + descriptionPremodified(description + link))) return descriptionPremodified(description);
+        const shortenPostText = (text: string): string => {
+            if ((text.substring(0, text.lastIndexOf(' ')) + '…').length > 280) {
+                return shortenPostText(text.substring(0, text.lastIndexOf(' ')) + '…')
+            } else {
+                return text.substring(0, text.lastIndexOf(' ')) + '…'
+            }
+        }
+
+        if (checkLength(postText)) { return postText }
         else {
-             return checkAndModifyDescription(descriptionPremodified(description).slice(0, descriptionPremodified(description).lastIndexOf(' ')) + '…', title, link)
+            return shortenPostText(postText)
         }
     }
 
@@ -30,7 +43,7 @@ export default function PostList() {
         let postList = getPostList().then((posts): Post[] => posts);
 
         postList.then(res => {
-            setPostListItems(res.map((post, i) => <li key={i}>🚺 {post.title} 🚺<br/>{checkAndModifyDescription(post.description, post.title, post.link)}<br/>{post.link}</li>))
+            setPostListItems(res.map((post, i) => <li key={i}>{checkAndModifyPostText(post.description, post.title, post.link)}</li>))
             setState('success')
         })
 
