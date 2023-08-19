@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 
+const listStyle = 'list-style: none';
+
 const getPostList = async (): Promise<Post[]> => {
     const postList = await fetch('./api/twitter-posting');
 
@@ -14,24 +16,24 @@ export default function PostList() {
     const checkAndModifyPostText = (description: string, title: string, link: string): string => {
         const checkLength = (string: string) => string.length <= 280
 
-        let postText = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \n\n`
+        let postText = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \r\n`
             + description.replaceAll(/<div[^>]*>(.+)<\/div>/gmi, '')
                 .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
                 .replaceAll('<p>','')
-                .replaceAll('</p>', '\n\n')
+                .replaceAll('</p>', '\r\n')
                 .replaceAll('<!-- more -->', '')
                 .replaceAll(/<a[^>]+>/gmi, '')
                 .replaceAll('</a>', '')
 
         const shortenPostText = (text: string): string => {
-            if ((text.substring(0, text.lastIndexOf(' ')) + '…' + `\n\n ${link}`).length > 280) {
+            if ((text.substring(0, text.lastIndexOf(' ')) + '…' + `\r\n ${link}`).length > 280) {
                 return shortenPostText(text.substring(0, text.lastIndexOf(' ')) + '…')
             } else {
-                return text.substring(0, text.lastIndexOf(' ')) + '…' + `\n\n ${link}`
+                return text.substring(0, text.lastIndexOf(' ')) + '…' + `\r\n ${link}`
             }
         }
 
-        if (checkLength(postText + `\n\n ${link}`)) { return postText + `\n\n ${link}` }
+        if (checkLength(postText + `\n\n ${link}`)) { return postText + `\r\n ${link}` }
         else {
             return shortenPostText(postText)
         }
@@ -51,7 +53,7 @@ export default function PostList() {
 
 
     return (
-        <ul>{state === 'success' ? postListItems : <>Loading...</>}</ul>
+        <ul style={{listStyle}}>{state === 'success' ? postListItems : <>Loading...</>}</ul>
     )
 }
 
