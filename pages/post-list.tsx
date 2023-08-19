@@ -10,7 +10,7 @@ export default async function PostList() {
     let postList: Post[] = await getPostList();
     let postListItems = postList.map(post => <li key={post.link}>`🚺 ${post.title} 🚺\\n\\n` + `${post.link}`</li>)
     return(
-        <ul>{postListItems}</ul>
+        <ul>{Array(postListItems)}</ul>
     )
 }
 
