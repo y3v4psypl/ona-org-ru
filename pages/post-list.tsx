@@ -1,7 +1,5 @@
 import {useEffect, useState} from "react";
 
-const listStyle = 'list-style: none';
-
 const getPostList = async (): Promise<Post[]> => {
     const postList = await fetch('./api/twitter-posting');
 
@@ -53,7 +51,7 @@ export default function PostList() {
 
 
     return (
-        <ul style={{listStyle}}>{state === 'success' ? postListItems : <>Loading...</>}</ul>
+        <ul style={{listStyle: 'none'}}>{state === 'success' ? postListItems : <>Loading...</>}</ul>
     )
 }
 
