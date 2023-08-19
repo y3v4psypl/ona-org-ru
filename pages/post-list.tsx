@@ -44,7 +44,7 @@ export default function PostList() {
         let postList = getPostList().then((posts): Post[] => posts);
 
         postList.then(res => {
-            setPostListItems(res.map((post, i) => <li key={i}>{checkAndModifyPostText(post.description, post.title, post.link)}</li>))
+            setPostListItems(res.map((post, i) => <li key={i}>{checkAndModifyPostText(post.description, post.title, post.link).join(`${<br/>}`)}</li>))
             setState('success')
         })
 
