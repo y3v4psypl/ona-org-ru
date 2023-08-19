@@ -6,11 +6,12 @@ const getPostList = async (): Promise<Post[]> => {
     return postList.json();
 }
 
-export default async function PostList() {
-    let postList: Post[] = await getPostList();
-    let postListItems = postList.map(post => <li key={post.link}>`🚺 ${post.title} 🚺\\n\\n` + `${post.link}`</li>)
-    return(
-        <ul>{Array(postListItems)}</ul>
+let postList: Post[] = await getPostList();
+
+export default function PostList() {
+    let postListItems = postList.map((post, i) => <li key={i}>`🚺 ${post.title} 🚺\\n\\n` + `${post.link}`</li>)
+    return (
+        <ul>{postListItems}</ul>
     )
 }
 
