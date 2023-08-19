@@ -15,7 +15,7 @@ export default function PostList() {
     useEffect(() => {
         let postList = getPostList().then((posts): Post[] => posts);
         postList.then(res => {
-            setPostListItems(res.map((post, i) => <li key={i}>🚺{post.title}🚺<br/>{post.link}</li>))
+            setPostListItems(res.map((post, i) => <li key={i}>🚺 {post.title} 🚺<br/>{post.description.length + `🚺 ${post.title} 🚺`.length + post.link.length <= 280 ? post.description : post.description.slice(0, post.description.lastIndexOf('. '))}{post.link}</li>))
             setState('success')
         })
 
