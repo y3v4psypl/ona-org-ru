@@ -43,7 +43,7 @@ const getPosts = async () => {
         posts.push(<Post>{
             title: item.title,
             description: item.description,
-            link: item.enclosure?.url
+            link: item.link
         })
     })
 
