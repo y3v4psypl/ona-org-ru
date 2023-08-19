@@ -33,7 +33,7 @@ export default function PostList() {
             }
         }
 
-        if (checkLength(postText + `\n\n ${link}`)) { return postText + `\r\n ${link}` }
+        if (checkLength(postText + `\n\n ${link}`)) { return postText + `\\r\\n ${link}` }
         else {
             return shortenPostText(postText)
         }
@@ -44,7 +44,7 @@ export default function PostList() {
         let postList = getPostList().then((posts): Post[] => posts);
 
         postList.then(res => {
-            setPostListItems(res.map((post, i) => <li key={i}>{checkAndModifyPostText(post.description, post.title, post.link)}</li>))
+            setPostListItems(res.map((post, i) => <li key={i}>{checkAndModifyPostText(post.description, post.title, post.link).replaceAll('\r\n', '<br/>')}</li>))
             setState('success')
         })
 
