@@ -13,7 +13,7 @@ export default function PostList() {
     const [state, setState] = useState('loading');
     const [postListItems, setPostListItems] = useState<JSX.Element[]>([<></>])
 
-    const checkAndModifyPostText = (description: string, title: string, link: string): string => {
+    const checkAndModifyPostText = (description: string, title: string, link: string): string[] => {
         const checkLength = (string: string) => string.length <= 280
 
         let postText = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \r\n`
@@ -33,9 +33,9 @@ export default function PostList() {
             }
         }
 
-        if (checkLength(postText + `\n\n ${link}`)) { return postText + `\\r\\n ${link}` }
+        if (checkLength(postText + `\n\n ${link}`)) { return (postText + `\r\n ${link}`).split('\r\n') }
         else {
-            return shortenPostText(postText)
+            return shortenPostText(postText).split('\r\n')
         }
     }
 
@@ -44,7 +44,7 @@ export default function PostList() {
         let postList = getPostList().then((posts): Post[] => posts);
 
         postList.then(res => {
-            setPostListItems(res.map((post, i) => <li key={i}>{checkAndModifyPostText(post.description, post.title, post.link).replaceAll('\r\n', '<br/>')}</li>))
+            setPostListItems(res.map((post, i) => <li key={i}>{checkAndModifyPostText(post.description, post.title, post.link)}</li>))
             setState('success')
         })
 
