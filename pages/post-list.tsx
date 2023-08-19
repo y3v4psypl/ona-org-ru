@@ -14,25 +14,24 @@ export default function PostList() {
     const checkAndModifyPostText = (description: string, title: string, link: string): string => {
         const checkLength = (string: string) => string.length <= 280
 
-        let postText = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \n`
+        let postText = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \n\n`
             + description.replaceAll(/<div[^>]*>(.+)<\/div>/gmi, '')
                 .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
                 .replaceAll('<p>','')
-                .replaceAll('</p>', '\n')
+                .replaceAll('</p>', '\n\n')
                 .replaceAll('<!-- more -->', '')
                 .replaceAll(/<a[^>]+>/gmi, '')
                 .replaceAll('</a>', '')
-            + `\n ${link}`
 
         const shortenPostText = (text: string): string => {
-            if ((text.substring(0, text.lastIndexOf(' ')) + '…').length > 280) {
+            if ((text.substring(0, text.lastIndexOf(' ')) + '…' + `\n\n ${link}`).length > 280) {
                 return shortenPostText(text.substring(0, text.lastIndexOf(' ')) + '…')
             } else {
-                return text.substring(0, text.lastIndexOf(' ')) + '…'
+                return text.substring(0, text.lastIndexOf(' ')) + '…' + `\n\n ${link}`
             }
         }
 
-        if (checkLength(postText)) { return postText }
+        if (checkLength(postText + `\n\n ${link}`)) { return postText + `\n\n ${link}` }
         else {
             return shortenPostText(postText)
         }
