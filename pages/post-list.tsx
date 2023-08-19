@@ -1,4 +1,7 @@
+import {useEffect, useState} from "react";
 
+const [state, setState] = useState('loading');
+const [postListItems, setPostListItems] = useState<JSX.Element[]>([<></>])
 
 const getPostList = async (): Promise<Post[]> => {
     const postList = await fetch('./api/twitter-posting');
@@ -6,13 +9,23 @@ const getPostList = async (): Promise<Post[]> => {
     return postList.json();
 }
 
-let postList: Post[];
-getPostList().then((posts): Post[] => postList = posts);
+
 
 export default function PostList() {
-    let postListItems = postList?.map((post, i) => <li key={i}>`🚺 ${post.title} 🚺\\n\\n` + `${post.link}`</li>)
+
+    useEffect(() => {
+        let postList = getPostList().then((posts): Post[] => posts);
+        postList.then(res => {
+            setPostListItems(res.map((post, i) => <li key={i}>`🚺 ${post.title} 🚺\\n\\n` + `${post.link}`</li>))
+            setState('success')
+        })
+
+    }, [])
+
+
+
     return (
-        <ul>{postListItems}</ul>
+        <ul>{state === 'success' ? postListItems : <>Loading...</>}</ul>
     )
 }
 
