@@ -10,7 +10,7 @@ let postList: Post[];
 getPostList().then((posts): Post[] => postList = posts);
 
 export default function PostList() {
-    let postListItems = postList.map((post, i) => <li key={i}>`🚺 ${post.title} 🚺\\n\\n` + `${post.link}`</li>)
+    let postListItems = postList?.map((post, i) => <li key={i}>`🚺 ${post.title} 🚺\\n\\n` + `${post.link}`</li>)
     return (
         <ul>{postListItems}</ul>
     )
