@@ -15,7 +15,7 @@ export default function PostList() {
     useEffect(() => {
         let postList = getPostList().then((posts): Post[] => posts);
         postList.then(res => {
-            setPostListItems(res.map((post, i) => <li key={i}>{`🚺 ${post.title} 🚺\\n\\n` + `${post.link}`}</li>))
+            setPostListItems(res.map((post, i) => <li key={i}>{`🚺 ${post.title} 🚺\n\n` + `${post.link}`}</li>))
             setState('success')
         })
 
