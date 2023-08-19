@@ -14,7 +14,8 @@ export default function PostList() {
     const checkAndModifyDescription = (description: string, title: string, link: string): string => {
         const checkLength = (string: string) => string.length <= 280
 
-        const descriptionPremodified = (description: string) => description.slice(description.lastIndexOf('</div>'), description.length - 1)
+        const descriptionPremodified = (description: string) => description.slice(description.lastIndexOf('</div>') + 6, description.length - 1)
+            .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
             .replaceAll('<p>','')
             .replaceAll('</p>', '<br/>')
 
