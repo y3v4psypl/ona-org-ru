@@ -16,7 +16,7 @@ export default function PostList() {
         const hashtagString = categories.map(c => "#" + c + " ").join('');
         const postTitle = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \r\n`
 
-        let postDescription = description.replaceAll(/<div[^>]*>(.+)<\/div>/gmi, '')
+        let postDescription = description
             .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
             .replaceAll('<h1>', '')
             .replaceAll('<h2>', '')
@@ -40,12 +40,13 @@ export default function PostList() {
             .replaceAll('<i>', '')
             .replaceAll('</i>', '')
             .replaceAll(/<figure[^>]*>(.+)<\/figure>/gmi, '')
+            .replaceAll(/<div[^>]*><figure[^>]*><img[^>]*\/><\/figure><\/div>/gmi, '')
 
         const shortenPostDescription = (text: string): string => {
             if (!checkLength(postTitle + text.substring(0, text.lastIndexOf(' ')) + '…' + `\r\n ${link}` + `\r\n ${hashtagString}`)) {
                 return shortenPostDescription(text.substring(0, text.lastIndexOf(' ')) + '…')
             } else {
-                return postTitle + `\r\n ${text.substring(0, text.lastIndexOf(' '))}` + '…' + `\r\n ${link}` + `\r\n ${hashtagString}`
+                return postTitle + `${text.substring(0, text.lastIndexOf(' '))}` + '…' + `\r\n ${link}` + `\r\n ${hashtagString}`
             }
         }
 
