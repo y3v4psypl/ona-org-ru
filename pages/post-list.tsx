@@ -17,12 +17,19 @@ export default function PostList() {
         const postTitle = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \r\n`
 
         let postDescription = description.replaceAll(/<div[^>]*>(.+)<\/div>/gmi, '')
-                .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
-                .replaceAll('<p>','')
-                .replaceAll('</p>', '\r\n')
-                .replaceAll('<!-- more -->', '')
-                .replaceAll(/<a[^>]+>/gmi, '')
-                .replaceAll('</a>', '')
+            .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
+            .replaceAll(/<p[^>]+>/gmi,'')
+            .replaceAll('</p>', '\r\n')
+            .replaceAll('<!-- more -->', '')
+            .replaceAll(/<a[^>]+>/gmi, '')
+            .replaceAll('</a>', '')
+            .replaceAll('<small>', '')
+            .replaceAll(/<small[^>]*>(.+)<\/small>/gmi, '')
+            .replaceAll('<b>', '')
+            .replaceAll('</b>', '')
+            .replaceAll('<i>', '')
+            .replaceAll('</i>', '')
+            .replaceAll(/<figure[^>]*>(.+)<\/figure>/gmi, '')
 
         const shortenPostDescription = (text: string): string => {
             if (!checkLength(postTitle + text.substring(0, text.lastIndexOf(' ')) + '…' + `\r\n ${link}` + `\r\n ${hashtagString}`)) {
