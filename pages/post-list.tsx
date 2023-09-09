@@ -18,6 +18,7 @@ export default function PostList() {
 
         let postDescription = description
             .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
+            .replaceAll(/<div[^>]*><figure[^>]*><img[^>]*\/><\/figure><\/div>/gmi, '')
             .replaceAll('<h1>', '')
             .replaceAll('<h2>', '')
             .replaceAll('<h3>', '')
@@ -40,7 +41,7 @@ export default function PostList() {
             .replaceAll('<i>', '')
             .replaceAll('</i>', '')
             .replaceAll(/<figure[^>]*>(.+)<\/figure>/gmi, '')
-            .replaceAll(/<div[^>]*><figure[^>]*><img[^>]*\/><\/figure><\/div>/gmi, '')
+
 
         const shortenPostDescription = (text: string): string => {
             if (!checkLength(postTitle + text.substring(0, text.lastIndexOf(' ')) + '…' + `\r\n ${link}` + `\r\n ${hashtagString}`)) {
