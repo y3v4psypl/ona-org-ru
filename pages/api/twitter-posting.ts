@@ -73,4 +73,4 @@ type Post = {
     'category': Category
 }
 type Category = string;
-type CustomItem = {description: string,};
+type CustomItem = {description: string, category: string};
