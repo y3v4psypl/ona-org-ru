@@ -11,7 +11,7 @@ const cors = Cors({
 
 const parser = new Parser<CustomItem>({
     customFields: {
-        item: ['description', 'category', 'category', 'category']
+        item: ['description', 'categories']
     }
 });
 
@@ -44,7 +44,7 @@ const getPosts = async () => {
             title: item.title,
             description: item.description,
             link: item.link,
-            category: item.category
+            categories: item.categories,
         })
     })
 
@@ -70,7 +70,7 @@ type Post = {
     'title': string,
     'description': string,
     'link': string
-    'category': Category
+    'categories': Category[]
 }
 type Category = string;
-type CustomItem = {description: string, category: string};
+type CustomItem = {description: string, categories: Category[]};
