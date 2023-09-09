@@ -11,7 +11,7 @@ const cors = Cors({
 
 const parser = new Parser<CustomItem>({
     customFields: {
-        item: ['description']
+        item: ['description', 'category']
     }
 });
 
