@@ -18,12 +18,18 @@ export default function PostList() {
 
         let postDescription = description.replaceAll(/<div[^>]*>(.+)<\/div>/gmi, '')
             .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
+            .replaceAll('<h1>', '')
+            .replaceAll('<h2>', '')
+            .replaceAll('<h3>', '')
+            .replaceAll('</h1>', '\r\n')
+            .replaceAll('</h2>', '\r\n')
+            .replaceAll('</h3>', '\r\n')
             .replaceAll(/<p[^>]+>/gmi,'')
             .replaceAll('<p>&mdash;&mdash;&mdash;</p>', '')
             .replaceAll('<p>', '')
             .replaceAll('</p>', '\r\n')
             .replaceAll('<!-- more -->', '')
-            .replaceAll(/<a[^>]+>/gmi, '')
+            .replaceAll(/<a[^>]*>(.+)<\/a>/gmi, '')
             .replaceAll('<a>', '')
             .replaceAll('</a>', '')
             .replaceAll('<small>', '')
@@ -39,7 +45,7 @@ export default function PostList() {
             if (!checkLength(postTitle + text.substring(0, text.lastIndexOf(' ')) + '…' + `\r\n ${link}` + `\r\n ${hashtagString}`)) {
                 return shortenPostDescription(text.substring(0, text.lastIndexOf(' ')) + '…')
             } else {
-                return postTitle + text.substring(0, text.lastIndexOf(' ')) + '…' + `\r\n ${link}` + `\r\n ${hashtagString}`
+                return postTitle + `\r\n ${text.substring(0, text.lastIndexOf(' '))}` + '…' + `\r\n ${link}` + `\r\n ${hashtagString}`
             }
         }
 
