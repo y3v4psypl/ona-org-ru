@@ -43,7 +43,8 @@ const getPosts = async () => {
         posts.push(<Post>{
             title: item.title,
             description: item.description,
-            link: item.link
+            link: item.link,
+            category: item.category
         })
     })
 
@@ -69,6 +70,7 @@ type Post = {
     'title': string,
     'description': string,
     'link': string
+    'category': Category
 }
-
-type CustomItem = {description: string};
+type Category = string;
+type CustomItem = {description: string,};
