@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 
 const getPostList = async (): Promise<Post[]> => {
-    const postList = await fetch('./api/twitter-posting');
+    const postList = await fetch(`./api/twitter-posting?id=${Math.random() * 100}`);
 
     return postList.json();
 }
