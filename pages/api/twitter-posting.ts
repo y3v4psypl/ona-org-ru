@@ -51,15 +51,6 @@ const getPosts = async () => {
     return posts;
 }
 
-
-let updateInterval: NodeJS.Timer;
-
-const updatePostsEveryMinute = () => {
-    updateInterval = setInterval(async () => {await getPosts(); console.log('Posts updated')}, 60000);
-}
-
-
-
 const handler = async (
     req: NextApiRequest,
     res: NextApiResponse
@@ -67,11 +58,9 @@ const handler = async (
     // Run the middleware
     await runMiddleware(req, res, cors)
 
-    clearInterval(updateInterval)
     res.json(await getPosts());
 }
 
-updatePostsEveryMinute();
 
 type Post = {
     'title': string,
