@@ -45,13 +45,20 @@ const getPosts = async () => {
             description: item.description,
             link: item.link,
             categories: item.categories,
-        })
-    })
-
-    console.log(posts);
+        });
+    });
 
     return posts;
 }
+
+
+let updateInterval: NodeJS.Timer;
+
+const updatePostsEveryMinute = () => {
+    updateInterval = setInterval(async () => {await getPosts(); console.log('Posts updated')}, 60000);
+}
+
+
 
 const handler = async (
     req: NextApiRequest,
@@ -60,11 +67,11 @@ const handler = async (
     // Run the middleware
     await runMiddleware(req, res, cors)
 
-
+    clearInterval(updateInterval)
     res.json(await getPosts());
 }
 
-export default handler;
+updatePostsEveryMinute();
 
 type Post = {
     'title': string,
@@ -74,3 +81,5 @@ type Post = {
 }
 type Category = string;
 type CustomItem = {description: string, categories: Category[]};
+
+export default handler;
