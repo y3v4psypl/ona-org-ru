@@ -73,7 +73,7 @@ export default function PostList() {
 
 
     return (
-        <ul style={{listStyle: 'none'}}>{state === 'success' ? postListItems : <>Loading...</>}</ul>
+        <ul style={{listStyle: 'none', paddingInlineStart: '5px', margin: '0 auto auto'}}>{state === 'success' ? postListItems : <>Loading...</>}</ul>
     )
 }
 
