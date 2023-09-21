@@ -14,7 +14,7 @@ export default function PostList() {
     const checkAndModifyPostText = (description: string, title: string, link: string, categories: Category[]): string[] => {
         const checkLength = (string: string) => string.length <= 280;
         const hashtagString = categories.map(c => "#" + c + " ").join('');
-        const postTitle = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')} 🚺 \r\n`
+        const postTitle = `🚺 ${title.replaceAll('&laquo;', '«').replaceAll('&raquo;', '»').replaceAll('&mdash;', '—')} 🚺 \r\n`
 
         let postDescription = description
             .replaceAll('&laquo;', '«').replaceAll('&raquo;', '»')
